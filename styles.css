@@ -6,4 +6,5 @@
 body {
   font-size: var(--fontsize);
   color: var(--fontcolor);
+  font-family: Arial, sans-serif;
 }

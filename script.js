@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) {
-      return parts.pop().split(";").shift();
+      return parts.pop().split(";")[0];
     }
   }
 
@@ -36,11 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Store for 1 year
+    // Save cookies (1 year)
     document.cookie = `fontsize=${size}; path=/; max-age=31536000`;
     document.cookie = `fontcolor=${color}; path=/; max-age=31536000`;
 
-    // Update CSS instantly
+    // Apply instantly
     document.documentElement.style.setProperty("--fontsize", size + "px");
     document.documentElement.style.setProperty("--fontcolor", color);
   });
