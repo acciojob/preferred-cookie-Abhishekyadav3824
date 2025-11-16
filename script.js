@@ -1,15 +1,14 @@
-//your JS code here. If required.
-// Helper: get cookie by name
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) {
-    return parts.pop().split(";").shift();
+document.addEventListener("DOMContentLoaded", function () {
+  // Helper: get cookie by name
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop().split(";").shift();
+    }
   }
-}
 
-// Apply saved preferences on load
-window.onload = function () {
+  // Apply saved preferences on load
   const savedSize = getCookie("fontsize");
   const savedColor = getCookie("fontcolor");
 
@@ -22,27 +21,27 @@ window.onload = function () {
     document.documentElement.style.setProperty("--fontcolor", savedColor);
     document.getElementById("fontcolor").value = savedColor;
   }
-};
 
-// Save preferences to cookies
-document.getElementById("settingsForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+  // Save preferences to cookies
+  const form = document.getElementById("settingsForm");
 
-  const size = document.getElementById("fontsize").value;
-  const color = document.getElementById("fontcolor").value;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  if (size < 8 || size > 72) {
-    alert("Font size must be between 8 and 72.");
-    return;
-  }
+    const size = document.getElementById("fontsize").value;
+    const color = document.getElementById("fontcolor").value;
 
-  // Store cookies for 1 year
-  document.cookie = `fontsize=${size}; path=/; max-age=31536000`;
-  document.cookie = `fontcolor=${color}; path=/; max-age=31536000`;
+    if (size < 8 || size > 72) {
+      alert("Font size must be between 8 and 72.");
+      return;
+    }
 
-  // Apply instantly
-  document.documentElement.style.setProperty("--fontsize", size + "px");
-  document.documentElement.style.setProperty("--fontcolor", color);
+    // Store for 1 year
+    document.cookie = `fontsize=${size}; path=/; max-age=31536000`;
+    document.cookie = `fontcolor=${color}; path=/; max-age=31536000`;
 
-  alert("Preferences saved!");
+    // Update CSS instantly
+    document.documentElement.style.setProperty("--fontsize", size + "px");
+    document.documentElement.style.setProperty("--fontcolor", color);
+  });
 });
